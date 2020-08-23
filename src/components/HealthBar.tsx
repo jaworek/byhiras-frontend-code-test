@@ -1,17 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 type Props = {
   health: number;
   resolveGame: () => void;
 };
 
-function HealthBar({ health, resolveGame }: Props) {
-  useEffect(() => {
-    if (health <= 0) {
-      resolveGame();
-    }
-  }, [health]);
-
+function HealthBar({ health }: Props) {
   let barColor = "bg-green-600";
   if (health === 100) {
     barColor = "bg-green-600";
