@@ -7,10 +7,10 @@ type Props = {
 function PlayerImage({ image }: Props) {
   return (
     <img
-      className="flex flex-col w-20 h-30"
+      className="flex flex-col"
       src={image}
-      width={180}
-      height={360}
+      width={350}
+      height={350}
       alt="avatar"
     />
   );

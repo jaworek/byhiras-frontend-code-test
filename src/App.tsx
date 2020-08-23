@@ -4,6 +4,7 @@ import Button from "./components/Button";
 import Message from "./components/Message";
 import "./tailwind.output.css";
 import warriorApu from "./images/warrior-apu.png";
+import cheems from "./images/cheems.jpg";
 import PlayerSide from "./components/PlayerSide";
 
 function App() {
@@ -66,7 +67,7 @@ function App() {
           className="flex-row-reverse"
           dices={state.monsterDices}
           health={state.monsterHealth}
-          image={warriorApu}
+          image={cheems}
           resolveGame={gameWon}
           playerName="Monster"
         />

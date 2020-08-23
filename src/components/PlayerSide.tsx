@@ -21,7 +21,7 @@ function PlayerSide({
   resolveGame,
 }: PlayerSideProps) {
   return (
-    <section className={`flex space-x-4 ${className}`}>
+    <section className={`flex space-x-4 items-center ${className}`}>
       <div className="flex flex-col">
         <div className="flex-1">
           <PlayerImage image={image} />
