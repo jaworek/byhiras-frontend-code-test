@@ -1,1 +1,8 @@
 # Byhiras - frontend code test
+
+### Ideas for improvement:
+- Use local storage to keep game state
+- Add option to toggle sound effects
+- Add dark mode support
+- Add tests
+- Make website more responsive to different screen types
