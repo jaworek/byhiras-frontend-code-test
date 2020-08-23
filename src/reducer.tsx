@@ -1,12 +1,14 @@
+import { sumDices, throwDice } from "./utils/dice";
+
 type State = {
   gameState: "start" | "running" | "rolling" | "won" | "lost";
   message: string;
   playerState: any;
   monsterState: any;
   playerHealth: number;
-  playerDices: number[];
+  playerDices: number[] | null[];
   monsterHealth: number;
-  monsterDices: number[];
+  monsterDices: number[] | null[];
 };
 
 const initialState: State = {
@@ -20,17 +22,6 @@ const initialState: State = {
   monsterDices: [0, 0],
 };
 
-function throwDice() {
-  return Math.round(Math.random() * 5) + 1;
-}
-
-function sumDices(dices: number[]) {
-  return dices.reduce(
-    (previousValue, currentValue) => previousValue + currentValue,
-    0
-  );
-}
-
 function attack(state: State): State {
   const playerDices = [throwDice(), throwDice()];
   const monsterDices = [throwDice(), throwDice()];
@@ -38,14 +29,18 @@ function attack(state: State): State {
   const playerDiceSum = sumDices(playerDices);
   const monsterDiceSum = sumDices(monsterDices);
 
+  const newState: State = {
+    ...state,
+    playerDices,
+    monsterDices,
+    gameState: "running",
+  };
+
   if (playerDiceSum > monsterDiceSum) {
     const damage = playerDiceSum - monsterDiceSum;
 
     return {
-      ...state,
-      playerDices,
-      monsterDices,
-      gameState: "running",
+      ...newState,
       message: "Yay!",
       monsterHealth: state.monsterHealth - damage,
     };
@@ -55,20 +50,14 @@ function attack(state: State): State {
     const damage = monsterDiceSum - playerDiceSum;
 
     return {
-      ...state,
-      playerDices,
-      monsterDices,
-      gameState: "running",
+      ...newState,
       message: "Ouch!",
       playerHealth: state.playerHealth - damage,
     };
   }
 
   return {
-    ...state,
-    playerDices,
-    monsterDices,
-    gameState: "running",
+    ...newState,
     message: "Draw",
   };
 }
@@ -83,7 +72,12 @@ type Action =
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "rolling":
-      return { ...state, gameState: "rolling" };
+      return {
+        ...state,
+        gameState: "rolling",
+        playerDices: [null, null],
+        monsterDices: [null, null],
+      };
     case "attack":
       return attack(state);
     case "won":

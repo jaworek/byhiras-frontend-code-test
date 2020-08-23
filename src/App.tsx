@@ -8,8 +8,8 @@ import Dice from "./components/Dice";
 import Message from "./components/Message";
 
 type PlayerSideProps = {
-  dice1: number;
-  dice2: number;
+  dice1: number | null;
+  dice2: number | null;
   health: number;
   gameLost: () => void;
 };
@@ -29,8 +29,8 @@ function PlayerSide({ dice1, dice2, health, gameLost }: PlayerSideProps) {
 }
 
 type MonsterSideProps = {
-  dice1: number;
-  dice2: number;
+  dice1: number | null;
+  dice2: number | null;
   health: number;
   gameWon: () => void;
 };
@@ -53,19 +53,22 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   function gameLost() {
-    return dispatch({ type: "lost" });
+    dispatch({ type: "lost" });
   }
 
   function gameWon() {
-    return dispatch({ type: "won" });
+    dispatch({ type: "won" });
   }
 
   function attack() {
-    return dispatch({ type: "attack" });
+    dispatch({ type: "rolling" });
+    setTimeout(() => {
+      dispatch({ type: "attack" });
+    }, 1000);
   }
 
   function resetGame() {
-    return dispatch({ type: "reset" });
+    dispatch({ type: "reset" });
   }
 
   return (
