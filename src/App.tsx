@@ -80,7 +80,13 @@ function App() {
   return (
     <main className="flex flex-1 flex-col space-y-8 p-4">
       <h1 className="text-5xl text-center">
-        <span role="img">⚔️</span>️ Battle Simulator <span role="img">⚔️</span>
+        <span role="img" aria-label="swords-emoji">
+          ⚔️
+        </span>
+        <span> Battle Simulator </span>
+        <span role="img" aria-label="swords-emoji">
+          ⚔️
+        </span>
       </h1>
       <div className="flex flex-1 justify-between items-center">
         <PlayerSide
