@@ -4,6 +4,7 @@ type Props = {
   history: string[];
 };
 
+// TODO Add automatic scroll to bottom when adding new items
 function History({ history }: Props) {
   return (
     <section className="flex flex-col items-center">
