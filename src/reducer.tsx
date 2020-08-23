@@ -3,8 +3,6 @@ import { sumDices, throwDice } from "./utils/dice";
 type State = {
   gameState: "start" | "running" | "rolling" | "won" | "lost";
   message: string;
-  playerState: any;
-  monsterState: any;
   playerHealth: number;
   playerDices: number[];
   monsterHealth: number;
@@ -14,8 +12,6 @@ type State = {
 const initialState: State = {
   gameState: "start",
   message: "Welcome!",
-  playerState: "",
-  monsterState: "",
   playerHealth: 100,
   playerDices: [0, 0],
   monsterHealth: 100,
@@ -84,7 +80,7 @@ function reducer(state: State, action: Action): State {
     case "reset":
       return initialState;
     default:
-      throw new Error(`This action does not exist`);
+      throw new Error(`This action does not exist: ${action}`);
   }
 }
 
