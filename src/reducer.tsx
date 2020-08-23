@@ -6,9 +6,9 @@ type State = {
   playerState: any;
   monsterState: any;
   playerHealth: number;
-  playerDices: number[] | null[];
+  playerDices: number[];
   monsterHealth: number;
-  monsterDices: number[] | null[];
+  monsterDices: number[];
 };
 
 const initialState: State = {
@@ -22,17 +22,19 @@ const initialState: State = {
   monsterDices: [0, 0],
 };
 
-function attack(state: State): State {
+function roll(state: State): State {
   const playerDices = [throwDice(), throwDice()];
   const monsterDices = [throwDice(), throwDice()];
 
-  const playerDiceSum = sumDices(playerDices);
-  const monsterDiceSum = sumDices(monsterDices);
+  return { ...state, gameState: "rolling", monsterDices, playerDices };
+}
+
+function attack(state: State): State {
+  const playerDiceSum = sumDices(state.playerDices);
+  const monsterDiceSum = sumDices(state.monsterDices);
 
   const newState: State = {
     ...state,
-    playerDices,
-    monsterDices,
     gameState: "running",
   };
 
@@ -63,7 +65,7 @@ function attack(state: State): State {
 }
 
 type Action =
-  | { type: "rolling" }
+  | { type: "roll" }
   | { type: "attack" }
   | { type: "won" }
   | { type: "lost" }
@@ -71,13 +73,8 @@ type Action =
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case "rolling":
-      return {
-        ...state,
-        gameState: "rolling",
-        playerDices: [null, null],
-        monsterDices: [null, null],
-      };
+    case "roll":
+      return roll(state);
     case "attack":
       return attack(state);
     case "won":

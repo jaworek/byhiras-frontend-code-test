@@ -6,46 +6,45 @@ import PlayerImage from "./components/PlayerImage";
 import HealthBar from "./components/HealthBar";
 import Dice from "./components/Dice";
 import Message from "./components/Message";
+import "./tailwind.output.css";
 
 type PlayerSideProps = {
-  dice1: number | null;
-  dice2: number | null;
+  dices: number[];
   health: number;
   gameLost: () => void;
 };
 
-function PlayerSide({ dice1, dice2, health, gameLost }: PlayerSideProps) {
+function PlayerSide({ dices, health, gameLost }: PlayerSideProps) {
   return (
-    <div>
+    <section>
       <div>
         <PlayerImage />
         <HealthBar health={health} x={gameLost} />
-        <Dice value={dice1} />
-        <Dice value={dice2} />
+        <Dice value={dices[0]} />
+        <Dice value={dices[1]} />
       </div>
       <div>Player</div>
-    </div>
+    </section>
   );
 }
 
 type MonsterSideProps = {
-  dice1: number | null;
-  dice2: number | null;
+  dices: number[];
   health: number;
   gameWon: () => void;
 };
 
-function MonsterSide({ dice1, dice2, health, gameWon }: MonsterSideProps) {
+function MonsterSide({ dices, health, gameWon }: MonsterSideProps) {
   return (
-    <div>
+    <section>
       <div>
-        <Dice value={dice1} />
-        <Dice value={dice2} />
+        <Dice value={dices[0]} />
+        <Dice value={dices[1]} />
         <HealthBar health={health} x={gameWon} />
         <PlayerImage />
       </div>
       <div>Monster</div>
-    </div>
+    </section>
   );
 }
 
@@ -61,8 +60,12 @@ function App() {
   }
 
   function attack() {
-    dispatch({ type: "rolling" });
+    const interval = setInterval(() => {
+      dispatch({ type: "roll" });
+    }, 100);
+
     setTimeout(() => {
+      clearInterval(interval);
       dispatch({ type: "attack" });
     }, 1000);
   }
@@ -72,19 +75,17 @@ function App() {
   }
 
   return (
-    <div>
-      <div>Battle Simulator</div>
+    <main>
+      <h1>Battle Simulator</h1>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <PlayerSide
-          dice1={state.playerDices[0]}
-          dice2={state.playerDices[1]}
+          dices={state.playerDices}
           health={state.playerHealth}
           gameLost={gameLost}
         />
         <Message text={state.message} />
         <MonsterSide
-          dice1={state.monsterDices[0]}
-          dice2={state.monsterDices[1]}
+          dices={state.monsterDices}
           health={state.monsterHealth}
           gameWon={gameWon}
         />
@@ -101,7 +102,7 @@ function App() {
       {state.gameState === "rolling" ? (
         <Button text="Rolling..." color="grey" onClick={() => {}} />
       ) : null}
-    </div>
+    </main>
   );
 }
 
