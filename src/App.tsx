@@ -1,45 +1,10 @@
 import React, { useEffect, useReducer } from "react";
-import "./App.css";
 import { initialState, reducer } from "./reducer";
 import Button from "./components/Button";
-import PlayerImage from "./components/PlayerImage";
-import HealthBar from "./components/HealthBar";
-import Dice from "./components/Dice";
 import Message from "./components/Message";
 import "./tailwind.output.css";
 import warriorApu from "./images/warrior-apu.png";
-
-type PlayerSideProps = {
-  className?: string;
-  image: string;
-  dices: number[];
-  health: number;
-  playerName: string;
-  resolveGame: () => void;
-};
-
-function PlayerSide({
-  className,
-  playerName,
-  image,
-  dices,
-  health,
-  resolveGame,
-}: PlayerSideProps) {
-  return (
-    <section className={`flex space-x-4 ${className}`}>
-      <div>
-        <PlayerImage image={image} />
-        <div>{playerName}</div>
-      </div>
-      <HealthBar health={health} resolveGame={resolveGame} />
-      <div className="space-y-4">
-        <Dice value={dices[0]} />
-        <Dice value={dices[1]} />
-      </div>
-    </section>
-  );
-}
+import PlayerSide from "./components/PlayerSide";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
