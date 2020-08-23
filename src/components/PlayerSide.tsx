@@ -22,9 +22,11 @@ function PlayerSide({
 }: PlayerSideProps) {
   return (
     <section className={`flex space-x-4 ${className}`}>
-      <div>
-        <PlayerImage image={image} />
-        <div>{playerName}</div>
+      <div className="flex flex-col">
+        <div className="flex-1">
+          <PlayerImage image={image} />
+        </div>
+        <div className="text-center">{playerName}</div>
       </div>
       <HealthBar health={health} resolveGame={resolveGame} />
       <div className="space-y-4">

@@ -53,7 +53,7 @@ function App() {
           ⚔️
         </span>
       </h1>
-      <div className="flex flex-1 justify-between items-center">
+      <div className="flex flex-1 justify-around items-center">
         <PlayerSide
           dices={state.playerDices}
           health={state.playerHealth}

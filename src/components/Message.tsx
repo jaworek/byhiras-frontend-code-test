@@ -5,7 +5,7 @@ type Props = {
 };
 
 function Message({ text }: Props) {
-  return <div className="text-3xl">{text}</div>;
+  return <div className="text-3xl text-center w-64">{text}</div>;
 }
 
 export default Message;
