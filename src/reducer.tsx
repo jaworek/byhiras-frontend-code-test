@@ -74,9 +74,9 @@ function reducer(state: State, action: Action): State {
     case "attack":
       return attack(state);
     case "won":
-      return { ...state, message: "You Win", gameState: "won" };
+      return { ...state, message: "You Win! 🎉", gameState: "won" };
     case "lost":
-      return { ...state, message: "Game Over", gameState: "lost" };
+      return { ...state, message: "Game Over 😭", gameState: "lost" };
     case "reset":
       return initialState;
     default:
