@@ -8,3 +8,4 @@
 - Make website more responsive to different screen types
 - Add history of attacks with statistics on how much damage has been dealt (done)
 - Add option to select number of dice
+- Optimize unnecessary renders
