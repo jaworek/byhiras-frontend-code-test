@@ -6,7 +6,7 @@ import React from "react";
 type PlayerSideProps = {
   className?: string;
   image: string;
-  dices: number[];
+  dice: number[];
   health: number;
   playerName: string;
   resolveGame: () => void;
@@ -16,12 +16,12 @@ function PlayerSide({
   className,
   playerName,
   image,
-  dices,
+  dice,
   health,
   resolveGame,
 }: PlayerSideProps) {
   return (
-    <section className={`flex space-x-4 items-center ${className}`}>
+    <div className={`flex space-x-4 items-center ${className}`}>
       <div className="flex flex-col">
         <div className="flex-1">
           <PlayerImage image={image} />
@@ -30,10 +30,10 @@ function PlayerSide({
       </div>
       <HealthBar health={health} resolveGame={resolveGame} />
       <div className="space-y-4">
-        <Dice value={dices[0]} />
-        <Dice value={dices[1]} />
+        <Dice value={dice[0]} />
+        <Dice value={dice[1]} />
       </div>
-    </section>
+    </div>
   );
 }
 

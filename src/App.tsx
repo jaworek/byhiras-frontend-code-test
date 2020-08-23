@@ -6,6 +6,7 @@ import "./tailwind.output.css";
 import warriorApu from "./images/warrior-apu.png";
 import cheems from "./images/cheems.jpg";
 import PlayerSide from "./components/PlayerSide";
+import History from "./components/History";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -54,9 +55,9 @@ function App() {
           ⚔️
         </span>
       </h1>
-      <div className="flex flex-1 justify-around items-center">
+      <section className="flex flex-1 justify-around items-center">
         <PlayerSide
-          dices={state.playerDices}
+          dice={state.playerDice}
           health={state.playerHealth}
           image={warriorApu}
           resolveGame={gameLost}
@@ -65,33 +66,36 @@ function App() {
         <Message text={state.message} />
         <PlayerSide
           className="flex-row-reverse"
-          dices={state.monsterDices}
+          dice={state.monsterDice}
           health={state.monsterHealth}
           image={cheems}
           resolveGame={gameWon}
           playerName="Monster"
         />
+      </section>
+      <History history={state.history} />
+      <div className="flex justify-center">
+        {state.gameState === "start" ? (
+          <Button text="Start" onClick={attack} />
+        ) : null}
+        {state.gameState === "lost" || state.gameState === "won" ? (
+          <Button
+            text="Retry?"
+            color="bg-yellow-600 hover:bg-yellow-800"
+            onClick={resetGame}
+          />
+        ) : null}
+        {state.gameState === "running" ? (
+          <Button
+            text="Attack!"
+            color="bg-red-600 hover:bg-red-800"
+            onClick={attack}
+          />
+        ) : null}
+        {state.gameState === "rolling" ? (
+          <Button text="Rolling..." color="bg-gray-600" />
+        ) : null}
       </div>
-      {state.gameState === "start" ? (
-        <Button text="Start" onClick={attack} />
-      ) : null}
-      {state.gameState === "lost" || state.gameState === "won" ? (
-        <Button
-          text="Retry?"
-          color="bg-yellow-600 hover:bg-yellow-800"
-          onClick={resetGame}
-        />
-      ) : null}
-      {state.gameState === "running" ? (
-        <Button
-          text="Attack!"
-          color="bg-red-600 hover:bg-red-800"
-          onClick={attack}
-        />
-      ) : null}
-      {state.gameState === "rolling" ? (
-        <Button text="Rolling..." color="bg-gray-600" />
-      ) : null}
     </main>
   );
 }

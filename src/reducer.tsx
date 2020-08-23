@@ -4,30 +4,32 @@ type State = {
   gameState: "start" | "running" | "rolling" | "won" | "lost";
   message: string;
   playerHealth: number;
-  playerDices: number[];
+  playerDice: number[];
   monsterHealth: number;
-  monsterDices: number[];
+  monsterDice: number[];
+  history: string[];
 };
 
 const initialState: State = {
   gameState: "start",
   message: "Welcome!",
   playerHealth: 100,
-  playerDices: [0, 0],
+  playerDice: [0, 0],
   monsterHealth: 100,
-  monsterDices: [0, 0],
+  monsterDice: [0, 0],
+  history: [],
 };
 
 function roll(state: State): State {
-  const playerDices = [throwDice(), throwDice()];
-  const monsterDices = [throwDice(), throwDice()];
+  const playerDice = [throwDice(), throwDice()];
+  const monsterDice = [throwDice(), throwDice()];
 
-  return { ...state, gameState: "rolling", monsterDices, playerDices };
+  return { ...state, gameState: "rolling", monsterDice, playerDice };
 }
 
 function attack(state: State): State {
-  const playerDiceSum = sumDices(state.playerDices);
-  const monsterDiceSum = sumDices(state.monsterDices);
+  const playerDiceSum = sumDices(state.playerDice);
+  const monsterDiceSum = sumDices(state.monsterDice);
 
   const newState: State = {
     ...state,
@@ -41,6 +43,7 @@ function attack(state: State): State {
       ...newState,
       message: "Yay!",
       monsterHealth: state.monsterHealth - damage,
+      history: [...state.history, `Player hit for ${damage} damage`],
     };
   }
 
@@ -51,12 +54,14 @@ function attack(state: State): State {
       ...newState,
       message: "Ouch!",
       playerHealth: state.playerHealth - damage,
+      history: [...state.history, `Monster hit for ${damage} damage`],
     };
   }
 
   return {
     ...newState,
     message: "Draw",
+    history: [...state.history, `Draw`],
   };
 }
 

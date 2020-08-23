@@ -13,7 +13,7 @@ function Button({
 }: Props) {
   return (
     <div
-      className={`${color} w-40 self-center py-2 rounded cursor-pointer select-none text-white text-center text-lg`}
+      className={`${color} w-40 py-2 rounded cursor-pointer select-none text-white text-center text-lg`}
       onClick={onClick}
     >
       {text}
