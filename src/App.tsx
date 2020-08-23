@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import "./App.css";
 import { initialState, reducer } from "./reducer";
 import Button from "./components/Button";
@@ -7,49 +7,52 @@ import HealthBar from "./components/HealthBar";
 import Dice from "./components/Dice";
 import Message from "./components/Message";
 import "./tailwind.output.css";
+import warriorApu from "./images/warrior-apu.png";
 
 type PlayerSideProps = {
+  className?: string;
+  image: string;
   dices: number[];
   health: number;
-  gameLost: () => void;
+  playerName: string;
+  resolveGame: () => void;
 };
 
-function PlayerSide({ dices, health, gameLost }: PlayerSideProps) {
+function PlayerSide({
+  className,
+  playerName,
+  image,
+  dices,
+  health,
+  resolveGame,
+}: PlayerSideProps) {
   return (
-    <section>
+    <section className={`flex space-x-4 ${className}`}>
       <div>
-        <PlayerImage />
-        <HealthBar health={health} x={gameLost} />
+        <PlayerImage image={image} />
+        <div>{playerName}</div>
+      </div>
+      <HealthBar health={health} resolveGame={resolveGame} />
+      <div className="space-y-4">
         <Dice value={dices[0]} />
         <Dice value={dices[1]} />
       </div>
-      <div>Player</div>
-    </section>
-  );
-}
-
-type MonsterSideProps = {
-  dices: number[];
-  health: number;
-  gameWon: () => void;
-};
-
-function MonsterSide({ dices, health, gameWon }: MonsterSideProps) {
-  return (
-    <section>
-      <div>
-        <Dice value={dices[0]} />
-        <Dice value={dices[1]} />
-        <HealthBar health={health} x={gameWon} />
-        <PlayerImage />
-      </div>
-      <div>Monster</div>
     </section>
   );
 }
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    if (state.playerHealth <= 0) {
+      return gameLost();
+    }
+
+    if (state.monsterHealth <= 0) {
+      return gameWon();
+    }
+  }, [state.playerHealth, state.monsterHealth]);
 
   function gameLost() {
     dispatch({ type: "lost" });
@@ -75,32 +78,45 @@ function App() {
   }
 
   return (
-    <main>
-      <h1>Battle Simulator</h1>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+    <main className="flex flex-1 flex-col space-y-8 p-4">
+      <h1 className="text-5xl text-center">⚔️ Battle Simulator ⚔️</h1>
+      <div className="flex flex-1 justify-between items-center">
         <PlayerSide
           dices={state.playerDices}
           health={state.playerHealth}
-          gameLost={gameLost}
+          image={warriorApu}
+          resolveGame={gameLost}
+          playerName="Player"
         />
         <Message text={state.message} />
-        <MonsterSide
+        <PlayerSide
+          className="flex-row-reverse"
           dices={state.monsterDices}
           health={state.monsterHealth}
-          gameWon={gameWon}
+          image={warriorApu}
+          resolveGame={gameWon}
+          playerName="Monster"
         />
       </div>
       {state.gameState === "start" ? (
         <Button text="Start" onClick={attack} />
       ) : null}
       {state.gameState === "lost" || state.gameState === "won" ? (
-        <Button text="Retry?" color="yellow" onClick={resetGame} />
+        <Button
+          text="Retry?"
+          color="bg-yellow-600 hover:bg-yellow-800"
+          onClick={resetGame}
+        />
       ) : null}
       {state.gameState === "running" ? (
-        <Button text="Attack!" color="red" onClick={attack} />
+        <Button
+          text="Attack!"
+          color="bg-red-600 hover:bg-red-800"
+          onClick={attack}
+        />
       ) : null}
       {state.gameState === "rolling" ? (
-        <Button text="Rolling..." color="grey" onClick={() => {}} />
+        <Button text="Rolling..." color="bg-gray-600" />
       ) : null}
     </main>
   );
