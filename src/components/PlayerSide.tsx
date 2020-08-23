@@ -26,7 +26,7 @@ function PlayerSide({
         <div className="flex-1">
           <PlayerImage image={image} />
         </div>
-        <div className="text-center">{playerName}</div>
+        <div className="text-center text-lg">{playerName}</div>
       </div>
       <HealthBar health={health} resolveGame={resolveGame} />
       <div className="space-y-4">
