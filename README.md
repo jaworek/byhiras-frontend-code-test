@@ -9,3 +9,5 @@
 - Add history of attacks with statistics on how much damage has been dealt (done)
 - Add option to select number of dice
 - Optimize unnecessary renders
+- Add animation to player images
+- Change image based on attack result
