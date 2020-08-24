@@ -1,11 +1,12 @@
 import React from "react";
 
 type Props = {
+  className: string;
   text: string;
 };
 
-function Message({ text }: Props) {
-  return <div className="text-3xl text-center w-64">{text}</div>;
+function Message({ className, text }: Props) {
+  return;
 }
 
 export default Message;
