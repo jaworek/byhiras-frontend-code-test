@@ -28,3 +28,4 @@
 - Add animation to player images
 - Change image based on attack result
 - Add option to specify player names
+- Make app work offline
