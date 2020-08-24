@@ -43,7 +43,13 @@ type Props = {
   resolveGame: () => void;
 };
 
+function calculateHealth(health: number) {
+  return health > 0 ? health : 0;
+}
+
 function HealthBar({ health }: Props) {
+  const calculatedHealth = calculateHealth(health);
+
   return (
     <div className="flex flex-col items-center">
       <div className="w-6 h-40 bg-gray-400 flex flex-col justify-end">
@@ -51,10 +57,10 @@ function HealthBar({ health }: Props) {
           className={`transition-all duration-500 ease-in-out ${getBarColor(
             health
           )}`}
-          style={{ height: `${health > 0 ? health : 0}%` }}
+          style={{ height: `${calculatedHealth}%` }}
         />
       </div>
-      <div className="w-20 text-center">{health}/100</div>
+      <div className="w-20 text-center">{calculatedHealth}/100</div>
     </div>
   );
 }
