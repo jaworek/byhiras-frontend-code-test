@@ -2,6 +2,9 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/9367f5b7-0600-47b7-97da-7c5413f32780/deploy-status)](https://app.netlify.com/sites/angry-mestorf-c28705/deploys)
 
+Check it out here:
+https://angry-mestorf-c28705.netlify.app/
+
 ### Specification:
 
 - Two dice are rolled for the player.
