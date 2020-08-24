@@ -38,14 +38,14 @@ function getBarColor(health: number) {
   return "bg-green-600";
 }
 
+function calculateHealth(health: number) {
+  return health > 0 ? health : 0;
+}
+
 type Props = {
   health: number;
   resolveGame: () => void;
 };
-
-function calculateHealth(health: number) {
-  return health > 0 ? health : 0;
-}
 
 function HealthBar({ health }: Props) {
   const calculatedHealth = calculateHealth(health);
