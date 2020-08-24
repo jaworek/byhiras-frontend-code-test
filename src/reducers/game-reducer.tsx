@@ -1,4 +1,4 @@
-import { sumDices, throwDice } from "../utils/dice";
+import { sumDice, throwDice } from "../utils/dice";
 
 export type GameState = "start" | "running" | "rolling" | "won" | "lost";
 
@@ -30,8 +30,8 @@ function roll(state: State): State {
 }
 
 function attack(state: State): State {
-  const playerDiceSum = sumDices(state.playerDice);
-  const monsterDiceSum = sumDices(state.monsterDice);
+  const playerDiceSum = sumDice(state.playerDice);
+  const monsterDiceSum = sumDice(state.monsterDice);
 
   const newState: State = {
     ...state,
