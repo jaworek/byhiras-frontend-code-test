@@ -1,10 +1,5 @@
 import React from "react";
 
-type Props = {
-  health: number;
-  resolveGame: () => void;
-};
-
 function getBarColor(health: number) {
   if (health === 100) {
     return "bg-green-600";
@@ -42,6 +37,11 @@ function getBarColor(health: number) {
 
   return "bg-green-600";
 }
+
+type Props = {
+  health: number;
+  resolveGame: () => void;
+};
 
 function HealthBar({ health }: Props) {
   return (
