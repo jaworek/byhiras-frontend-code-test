@@ -1,7 +1,9 @@
-import { sumDices, throwDice } from "./utils/dice";
+import { sumDices, throwDice } from "../utils/dice";
+
+export type GameState = "start" | "running" | "rolling" | "won" | "lost";
 
 type State = {
-  gameState: "start" | "running" | "rolling" | "won" | "lost";
+  gameState: GameState;
   message: string;
   playerHealth: number;
   playerDice: number[];
@@ -72,7 +74,7 @@ type Action =
   | { type: "lost" }
   | { type: "reset" };
 
-function reducer(state: State, action: Action): State {
+function gameReducer(state: State, action: Action): State {
   switch (action.type) {
     case "roll":
       return roll(state);
@@ -89,4 +91,4 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-export { initialState, reducer };
+export { initialState, gameReducer };

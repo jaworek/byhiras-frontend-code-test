@@ -1,15 +1,26 @@
 import React, { useEffect, useReducer } from "react";
-import { initialState, reducer } from "./reducer";
+import { GameState, initialState, gameReducer } from "./reducers/game-reducer";
 import Button from "./components/Button";
-import Message from "./components/Message";
 import "./tailwind.output.css";
 import warriorApu from "./images/warrior-apu.png";
 import cheems from "./images/cheems.jpg";
 import PlayerSide from "./components/PlayerSide";
 import History from "./components/History";
 
+function messageColor(status: GameState) {
+  if (status === "won") {
+    return "text-green-600";
+  }
+
+  if (status === "lost") {
+    return "text-red-600";
+  }
+
+  return "";
+}
+
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(gameReducer, initialState);
 
   useEffect(() => {
     if (state.playerHealth <= 0) {
@@ -63,7 +74,13 @@ function App() {
           resolveGame={gameLost}
           playerName="Player"
         />
-        <Message text={state.message} />
+        <div
+          className={`text-3xl text-center w-64 ${messageColor(
+            state.gameState
+          )}`}
+        >
+          {state.message}
+        </div>
         <PlayerSide
           className="flex-row-reverse"
           dice={state.monsterDice}
